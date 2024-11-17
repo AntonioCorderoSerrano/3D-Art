@@ -7,8 +7,18 @@
     <meta name="msapplication-tap-highlight" content="no">
     
 	<style>
-	  
-		@media (max-width: 768px) { 
+	  iframe{
+		height: 98%;
+	  }
+
+		@media (max-width: 769px) { 
+		  /* Para dispositivos móviles */
+		  iframe {
+			height: 100%; /* Ajustar la altura en móviles */
+		  }
+		}
+
+		@media (max-width: 460px) { 
 		  /* Para dispositivos móviles */
 		  iframe {
 			height: 250%; /* Ajustar la altura en móviles */
