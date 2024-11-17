@@ -26,7 +26,7 @@
 
 		.b-gal-item {
 			width: 100%;
-			height: 200px;  /* Aumenta la altura de las imágenes */
+			height: 200px;
 			object-fit: cover;
 			cursor: pointer;
 			transition: transform 0.3s ease;
@@ -36,22 +36,20 @@
 			transform: scale(1.05);
 		}
 
-				/* Estilo para pantallas móviles (máximo 768px) */
+		/* Ajustes para pantallas móviles (hasta 768px) */
 		@media (max-width: 768px) {
 			.gallery {
-				grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas pequeñas */
+				grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas móviles */
 			}
 
-			/* Aumenta el tamaño de los botones en pantallas pequeñas */
-			.nav-btn {
-				font-size: 24px;
-				padding: 15px;
+			.b-gal-item {
+				height: 150px;  /* Ajustar la altura de las imágenes */
 			}
 		}
 
 		/* Estilo del modal */
 		.modal {
-			display: none;
+			display: none;  /* Modal oculto por defecto */
 			position: fixed;
 			z-index: 1;
 			padding-top: 100px;
@@ -61,7 +59,6 @@
 			height: 100%;
 			overflow: auto;
 			background-color: rgba(0, 0, 0, 0.8);
-			/* Flexbox para centrar la imagen */
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -74,7 +71,6 @@
 			max-width: 700px;
 		}
 
-		/* Estilo del botón de cerrar */
 		.close {
 			position: absolute;
 			top: 15px;
@@ -85,15 +81,14 @@
 			cursor: pointer;
 		}
 
-		/* Estilo de los botones de navegación */
 		.nav-btn {
 			position: absolute;
 			top: 50%;
 			background-color: rgba(0, 0, 0, 0.5);
 			color: white;
 			border: none;
-			font-size: 30px;  /* Tamaño de fuente para escritorio */
-			padding: 20px;    /* Botones más grandes */
+			font-size: 30px;
+			padding: 20px;
 			cursor: pointer;
 			z-index: 2;
 		}
@@ -104,15 +99,6 @@
 
 		#nextBtn {
 			right: 30px;
-		}
-
-		/* Estilo para pantallas grandes (más de 768px) */
-		@media (min-width: 769px) {
-			/* Aumenta el tamaño de los botones en pantallas más grandes */
-			.nav-btn {
-				font-size: 40px;
-				padding: 25px;
-			}
 		}
 	</style>
 
@@ -432,22 +418,23 @@
 </div>
 </div>
 <div class="gallery">
-	<img class="b-gal-item" src="./index_files/01 Ismael Fisio interior porche 600x70.jpeg"/>
-	<img class="b-gal-item" src="./index_files/0da23f7ffbf6df72acb242b62d02f900.jpeg"/>
-	<img class="b-gal-item" src="./index_files/2024-04-04.png"/>
-	<img class="b-gal-item" src="./index_files/Adelino.jpeg"/>
-	<img class="b-gal-item" src="./index_files/Atardecer Torrequinto con logo.jpeg"/>
-	<img class="b-gal-item" src="./index_files/Interior salón fontanilla 80-9.jpeg"/>
-  </div>
-  
-  <!-- Modal (lightbox) -->
-  <div id="modal" class="modal">
-	<span id="closeModal" class="close">&times;</span>
-	<img id="modalImg" class="modal-content" />
-	<div id="caption"></div>
-	<button id="prevBtn" class="nav-btn"><</button>
-	<button id="nextBtn" class="nav-btn">></button>
-  </div>
+    <img class="b-gal-item" src="./index_files/01 Ismael Fisio interior porche 600x70.jpeg"/>
+    <img class="b-gal-item" src="./index_files/0da23f7ffbf6df72acb242b62d02f900.jpeg"/>
+    <img class="b-gal-item" src="./index_files/2024-04-04.png"/>
+    <img class="b-gal-item" src="./index_files/Adelino.jpeg"/>
+    <img class="b-gal-item" src="./index_files/Atardecer Torrequinto con logo.jpeg"/>
+    <img class="b-gal-item" src="./index_files/Interior salón fontanilla 80-9.jpeg"/>
+</div>
+
+<!-- Modal (lightbox) -->
+<div id="modal" class="modal">
+    <span id="closeModal" class="close">&times;</span>
+    <img id="modalImg" class="modal-content" />
+    <div id="caption"></div>
+    <button id="prevBtn" class="nav-btn"><</button>
+    <button id="nextBtn" class="nav-btn">></button>
+</div>
+
 </div>
 </div>
 </div>
@@ -457,47 +444,50 @@
 	</div>
 </section>
 <script>
-    let currentIndex = 0;
+   	let currentIndex = 0;
 	let images = document.querySelectorAll('.b-gal-item');
 	let modal = document.getElementById('modal');
 	let modalImg = document.getElementById('modalImg');
 	let caption = document.getElementById('caption');
+	modal.style.display = "none";
 
 	// Mostrar la imagen en el modal al hacer clic
 	images.forEach((img, index) => {
-	img.addEventListener('click', () => {
-		currentIndex = index;
-		modal.style.display = "block";
-		modalImg.src = img.src;
-		caption.innerHTML = img.alt;
-	});
+		img.addEventListener('click', () => {
+			console.log("Imagen clickeada: ", img.src); // Para depuración
+			currentIndex = index;
+			modal.style.display = "block";  // Mostrar el modal al hacer clic
+			modalImg.src = img.src;
+			caption.innerHTML = img.alt;
+		});
 	});
 
 	// Cerrar el modal
 	document.getElementById('closeModal').addEventListener('click', () => {
-	modal.style.display = "none";
+		modal.style.display = "none";  // Ocultar el modal
 	});
 
 	// Navegar a la imagen siguiente
 	document.getElementById('nextBtn').addEventListener('click', () => {
-	currentIndex = (currentIndex + 1) % images.length;
-	modalImg.src = images[currentIndex].src;
-	caption.innerHTML = images[currentIndex].alt;
+		currentIndex = (currentIndex + 1) % images.length;
+		modalImg.src = images[currentIndex].src;
+		caption.innerHTML = images[currentIndex].alt;
 	});
 
 	// Navegar a la imagen anterior
 	document.getElementById('prevBtn').addEventListener('click', () => {
-	currentIndex = (currentIndex - 1 + images.length) % images.length;
-	modalImg.src = images[currentIndex].src;
-	caption.innerHTML = images[currentIndex].alt;
+		currentIndex = (currentIndex - 1 + images.length) % images.length;
+		modalImg.src = images[currentIndex].src;
+		caption.innerHTML = images[currentIndex].alt;
 	});
 
 	// Cerrar el modal al hacer clic fuera de la imagen
 	window.addEventListener('click', (event) => {
-	if (event.target === modal) {
-		modal.style.display = "none";
-	}
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
 	});
+
 </script>
 </div>
 </div>
