@@ -16,82 +16,156 @@
 	<script async="" src="./index_files/gtm.js.descarga"></script>
 
 	<style>
-	/* Estilo básico de la galería */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3 columnas por defecto */
-  gap: 10px;
-  padding: 10px;
-}
+		/* Botones de navegación */
+		.nav-btn {
+		position: absolute;
+		top: 50%;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		border: none;
+		font-size: 30px;
+		padding: 20px;
+		cursor: pointer;
+		z-index: 2;
+		transform: translateY(-50%);
+		}
 
-.b-gal-item {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
+		#prevBtn {
+		left: 30px;
+		}
 
-.b-gal-item:hover {
-  transform: scale(1.05);
-}
+		#nextBtn {
+		right: 30px;
+		}
+		
+		/* Estilo básico de la galería */
+		.gallery {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);  /* 3 columnas por defecto */
+		gap: 10px;
+		padding: 10px;
+		}
 
-/* Ajustes para pantallas móviles (hasta 768px) */
-@media (max-width: 768px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas móviles */
-  }
+		.b-gal-item {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		cursor: pointer;
+		transition: transform 0.3s ease;
+		}
 
-  .b-gal-item {
-    height: 150px;  /* Ajustar la altura de las imágenes */
-  }
-}
 
-/* Estilo del modal */
-.modal {
-  display: none;  /* Modal oculto por defecto */
-  position: fixed;
-  z-index: 1000; /* Asegúrate de que el modal esté por encima de otros elementos */
-  width: 90%;  /* Utiliza un ancho más flexible */
-  max-width: 1000px;  /* Asegura que no sea más grande que 1000px */
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.8);
-  overflow: auto;
-  justify-content: center;
-  align-items: center;
-  top: 50%;  /* Inicialmente, coloca el modal en el centro de la pantalla */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: top 0.3s, left 0.3s, opacity 0.3s ease-in-out;  /* Transición más suave */
-  opacity: 0;
-  visibility: hidden;  /* Lo mantenemos oculto inicialmente */
-}
+		/* Ajustes para pantallas móviles (hasta 768px) */
+		@media (max-width: 768px) {
+		.gallery {
+			grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas móviles */
+		}
 
-.modal.show {
-  opacity: 1;
-  visibility: visible;  /* Cuando se muestra, hace la transición de aparición */
-}
+		.b-gal-item {
+			height: 150px;  /* Ajustar la altura de las imágenes */
+		}
+		}
 
-.modal-content {
-  width: 100%;
-  max-height: 80vh;  /* Aseguramos que la imagen no se desborde */
-  object-fit: contain;  /* Mantiene la imagen dentro del modal sin distorsionar */
-}
+		/* Estilo del modal */
+		.modal {
+		display: none;  /* Modal oculto por defecto */
+		position: fixed;
+		z-index: 1000; /* Asegúrate de que el modal esté por encima de otros elementos */
+		width: 90%;  /* Utiliza un ancho más flexible */
+		max-width: 1000px;  /* Asegura que no sea más grande que 1000px */
+		padding: 20px;
+		background-color: rgba(0, 0, 0, 0.8);
+		overflow: auto;
+		justify-content: center;
+		align-items: center;
+		top: 50%;  /* Inicialmente, coloca el modal en el centro de la pantalla */
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: top 0.3s, left 0.3s, opacity 0.3s ease-in-out;  /* Transición más suave */
+		opacity: 0;
+		visibility: hidden;  /* Lo mantenemos oculto inicialmente */
+		}
 
-.close {
+		.modal.show {
+		opacity: 1;
+		visibility: visible;  /* Cuando se muestra, hace la transición de aparición */
+		}
+
+		.modal-content {
+		width: 100%;
+		max-height: 80vh;  /* Aseguramos que la imagen no se desborde */
+		object-fit: contain;  /* Mantiene la imagen dentro del modal sin distorsionar */
+		}
+
+		.close {
+		position: absolute;
+		top: 15px;
+		right: 35px;
+		color: white;
+		font-size: 40px;
+		font-weight: bold;
+		cursor: pointer;
+		}
+
+		@media (max-width: 769px) {
+		/* Para pantallas más pequeñas (móviles) */
+		.modal-content {
+			max-height: 70vh;  /* Un poco más pequeño en móviles */
+		}
+		}
+
+		/* Botones de navegación */
+.nav-btn {
   position: absolute;
-  top: 15px;
-  right: 35px;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  font-size: 40px;
-  font-weight: bold;
+  border: none;
+  font-size: 30px;
+  padding: 15px;
   cursor: pointer;
+  z-index: 2;
+  transform: translateY(-50%);
 }
 
-@media (max-width: 769px) {
-  /* Para pantallas más pequeñas (móviles) */
-  .modal-content {
-    max-height: 70vh;  /* Un poco más pequeño en móviles */
+/* Botón "anterior" */
+#prevBtn {
+  left: 30px;
+}
+
+/* Botón "siguiente" */
+#nextBtn {
+  right: 30px;
+}
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+  .nav-btn {
+    font-size: 24px; /* Reducir el tamaño de los botones en móviles */
+    padding: 12px; /* Reducir el tamaño del padding */
+  }
+
+  #prevBtn {
+    left: 20px;  /* Ajustar la distancia del botón de la izquierda */
+  }
+
+  #nextBtn {
+    right: 20px; /* Ajustar la distancia del botón de la derecha */
+  }
+}
+
+@media (max-width: 460px) {
+  .nav-btn {
+    font-size: 20px; /* Aún más pequeño en pantallas muy pequeñas */
+    padding: 10px;
+  }
+
+  #prevBtn {
+    left: 10px;  /* Ajustar más la posición en pantallas muy pequeñas */
+  }
+
+  #nextBtn {
+    right: 10px; /* Ajustar más la posición en pantallas muy pequeñas */
   }
 }
 	</style>
@@ -421,8 +495,14 @@
 <!-- Modal (lightbox) -->
 <div id="modal" class="modal">
     <span id="closeModal" class="close">&times;</span>
+	<!-- Botón de anterior -->
+	<button id="prevBtn" class="nav-btn">&lt;</button>
+
     <img id="modalImg" class="modal-content" />
     <div id="caption"></div>
+
+	<!-- Botón de siguiente -->
+	<button id="nextBtn" class="nav-btn">&gt;</button>
 </div>
 
 </div>
@@ -438,6 +518,7 @@
 	let modal = document.getElementById('modal');
 	let modalImg = document.getElementById('modalImg');
 	let caption = document.getElementById('caption');
+	let currentIndex = 0;  // Índice de la imagen actual
 
 	// Al principio, el modal está oculto
 	modal.style.display = "none";
@@ -472,6 +553,20 @@
 	}
 	});
 
+	// Navegar a la imagen siguiente
+	document.getElementById('nextBtn').addEventListener('click', () => {
+	currentIndex = (currentIndex + 1) % images.length;  // Pasar a la siguiente imagen (circular)
+	modalImg.src = images[currentIndex].src;
+	caption.innerHTML = images[currentIndex].alt;
+	});
+
+	// Navegar a la imagen anterior
+	document.getElementById('prevBtn').addEventListener('click', () => {
+	currentIndex = (currentIndex - 1 + images.length) % images.length;  // Volver a la imagen anterior (circular)
+	modalImg.src = images[currentIndex].src;
+	caption.innerHTML = images[currentIndex].alt;
+	});
+	
 
 </script>
 </div>
