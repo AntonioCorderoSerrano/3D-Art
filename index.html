@@ -36,20 +36,39 @@
 			transform: scale(1.05);
 		}
 
-		/* Ajustes para pantallas móviles (hasta 768px) */
+		/* Ajustes para pantallas móviles */
 		@media (max-width: 768px) {
 			.gallery {
-				grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas móviles */
+				grid-template-columns: repeat(2, 1fr);  /* 2 columnas */
 			}
 
 			.b-gal-item {
-				height: 150px;  /* Ajustar la altura de las imágenes */
+				height: 150px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.gallery {
+				grid-template-columns: 1fr; /* 1 columna para pantallas pequeñas */
+			}
+
+			.b-gal-item {
+				height: 120px;
+			}
+
+			.modal-content {
+				width: 90%;
+			}
+
+			.nav-btn {
+				font-size: 25px;
+				padding: 10px;
 			}
 		}
 
 		/* Estilo del modal */
 		.modal {
-			display: none;  /* Modal oculto por defecto */
+			display: none;
 			position: fixed;
 			z-index: 1;
 			padding-top: 100px;
@@ -69,6 +88,8 @@
 			display: block;
 			width: 80%;
 			max-width: 700px;
+			max-height: 80vh; /* Limitar altura */
+			object-fit: contain; /* Evitar distorsión */
 		}
 
 		.close {
@@ -100,9 +121,15 @@
 		#nextBtn {
 			right: 30px;
 		}
+
+		/* Clase para bloquear el scroll */
+		body.modal-open {
+			overflow: hidden;
+		}
 	</style>
 
-	<script>(()=>{let e=!1;const t=()=>{if(!e&&window.innerWidth>=600){for(let e=0,t=document.querySelectorAll('head > link[href*="css"][media="screen and (min-width:37.5em)"]');e<t.length;e++)t[e].removeAttribute("disabled");e=!0}};t(),window.addEventListener("resize",t),"container"in document.documentElement.style||fetch(document.querySelector('head > link[data-type="cq"]').getAttribute("href")).then((e=>{e.text().then((e=>{const t=document.createElement("style");document.head.appendChild(t),t.appendChild(document.createTextNode(e)),import("https://duyn491kcolsw.cloudfront.net/client/js.polyfill/container-query-polyfill.modern.js").then((()=>{let e=setInterval((function(){document.body&&(document.body.classList.add("cq-polyfill-loaded"),clearInterval(e))}),100)}))}))}))})()</script>
+	<script>
+	(()=>{let e=!1;const t=()=>{if(!e&&window.innerWidth>=600){for(let e=0,t=document.querySelectorAll('head > link[href*="css"][media="screen and (min-width:37.5em)"]');e<t.length;e++)t[e].removeAttribute("disabled");e=!0}};t(),window.addEventListener("resize",t),"container"in document.documentElement.style||fetch(document.querySelector('head > link[data-type="cq"]').getAttribute("href")).then((e=>{e.text().then((e=>{const t=document.createElement("style");document.head.appendChild(t),t.appendChild(document.createTextNode(e)),import("https://duyn491kcolsw.cloudfront.net/client/js.polyfill/container-query-polyfill.modern.js").then((()=>{let e=setInterval((function(){document.body&&(document.body.classList.add("cq-polyfill-loaded"),clearInterval(e))}),100)}))}))}))})()</script>
 <link rel="preload stylesheet" href="https://duyn491kcolsw.cloudfront.net/files/22/22p/22p7r7.css?ph=c515a84f4e" as="style">
 <meta name="description" content="Transformamos tus ideas en realidad">
 <meta name="keywords" content=""><meta name="generator" content="Webnode 2">
@@ -448,31 +475,43 @@
 	let caption = document.getElementById('caption');
 	modal.style.display = "none";
 
-	// Mostrar la imagen en el modal al hacer clic
+	// Función para añadir eventos click y touch
+	function addClickAndTouchListeners(element, handler) {
+		element.addEventListener('click', handler);
+		element.addEventListener('touchstart', handler, { passive: true });
+	}
+
+	// Bloquear y desbloquear el scroll del cuerpo
+	function toggleBodyScroll(isOpen) {
+		document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+	}
+
+	// Mostrar la imagen en el modal al hacer clic/tocar
 	images.forEach((img, index) => {
-		img.addEventListener('click', () => {
-			console.log("Imagen clickeada: ", img.src); // Para depuración
+		addClickAndTouchListeners(img, () => {
 			currentIndex = index;
-			modal.style.display = "block";  // Mostrar el modal al hacer clic
+			modal.style.display = "block";
 			modalImg.src = img.src;
 			caption.innerHTML = img.alt;
+			toggleBodyScroll(true);
 		});
 	});
 
 	// Cerrar el modal
-	document.getElementById('closeModal').addEventListener('click', () => {
-		modal.style.display = "none";  // Ocultar el modal
+	addClickAndTouchListeners(document.getElementById('closeModal'), () => {
+		modal.style.display = "none";
+		toggleBodyScroll(false);
 	});
 
 	// Navegar a la imagen siguiente
-	document.getElementById('nextBtn').addEventListener('click', () => {
+	addClickAndTouchListeners(document.getElementById('nextBtn'), () => {
 		currentIndex = (currentIndex + 1) % images.length;
 		modalImg.src = images[currentIndex].src;
 		caption.innerHTML = images[currentIndex].alt;
 	});
 
 	// Navegar a la imagen anterior
-	document.getElementById('prevBtn').addEventListener('click', () => {
+	addClickAndTouchListeners(document.getElementById('prevBtn'), () => {
 		currentIndex = (currentIndex - 1 + images.length) % images.length;
 		modalImg.src = images[currentIndex].src;
 		caption.innerHTML = images[currentIndex].alt;
@@ -482,9 +521,9 @@
 	window.addEventListener('click', (event) => {
 		if (event.target === modal) {
 			modal.style.display = "none";
+			toggleBodyScroll(false);
 		}
 	});
-
 </script>
 </div>
 </div>

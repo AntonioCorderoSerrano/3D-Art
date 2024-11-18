@@ -7,22 +7,34 @@
     <meta name="msapplication-tap-highlight" content="no">
     
 	<style>
-	  iframe{
-		height: 98%;
-	  }
+	  	.iframe-container {
+			position: relative;
+			width: 100%; /* Aseguramos que el contenedor ocupe todo el ancho disponible */
+			aspect-ratio: 16 / 9; /* Relación de aspecto de 16:9 para el mapa */
+			overflow: hidden;
+		}
+
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			border: none;
+		}
 
 		@media (max-width: 769px) { 
-		  /* Para dispositivos móviles */
-		  iframe {
-			height: 100%; /* Ajustar la altura en móviles */
-		  }
+			/* Para dispositivos móviles */
+			.iframe-container {
+				aspect-ratio: 4 / 3; /* Ajuste de relación de aspecto para pantallas más pequeñas */
+			}
 		}
 
 		@media (max-width: 460px) { 
-		  /* Para dispositivos móviles */
-		  iframe {
-			height: 250%; /* Ajustar la altura en móviles */
-		  }
+			/* Para pantallas muy pequeñas */
+			.iframe-container {
+				aspect-ratio: 1 / 1; /* Relación de aspecto 1:1 para pantallas muy pequeñas */
+			}
 		}
 	  </style>
 
@@ -234,17 +246,17 @@
 </div><div class="b b-s b-hr-line line-auto">
     <hr class="line-style line-color">
 </div><div class="b b-map b-s" style="margin-left:0%;margin-right:0%;">
-	<div id="wnd_MapBlock_729659756_container" style="position:relative;padding-bottom:31.67%;">
+	<div id="wnd_MapBlock_729659756_container" class="iframe-container">
 		<iframe 
-			src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.801148821364!2d-6.082947123616102!3d36.91901856099174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0ded8bfe4c056d%3A0x7a2bc81fa75d8941!2s3DA%2C%20servicio%20a%20la%20arquitectura%20y%20la%20construcci%C3%B3n%2C%20infograf%C3%ADa%203d!5e0!3m2!1ses!2ses!4v1731796678221!5m2!1ses!2ses" 
-			width="400" 
-			height="400"
-			style="border:0;" 
-			allowfullscreen="" 
-			loading="lazy"
-			referrerpolicy="no-referrer-when-downgrade">
+		  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.801148821364!2d-6.082947123616102!3d36.91901856099174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0ded8bfe4c056d%3A0x7a2bc81fa75d8941!2s3DA%2C%20servicio%20a%20la%20arquitectura%20y%20la%20construcci%C3%B3n%2C%20infograf%C3%ADa%203d!5e0!3m2!1ses!2ses!4v1731796678221!5m2!1ses!2ses" 
+		  width="100%" 
+		  height="100%" 
+		  style="border:0;" 
+		  allowfullscreen="" 
+		  loading="lazy"
+		  referrerpolicy="no-referrer-when-downgrade">
 		</iframe>
-	</div>
+	  </div>
 </div></div>
 </div>
 			</div>
