@@ -18,113 +18,66 @@
 	<style>
 		/* Estilo básico de la galería */
 		.gallery {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);  /* 3 columnas por defecto */
-			gap: 10px;
-			padding: 10px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);  /* 3 columnas por defecto */
+		gap: 10px;
+		padding: 10px;
 		}
 
 		.b-gal-item {
-			width: 100%;
-			height: 200px;
-			object-fit: cover;
-			cursor: pointer;
-			transition: transform 0.3s ease;
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+		cursor: pointer;
+		transition: transform 0.3s ease;
 		}
 
 		.b-gal-item:hover {
-			transform: scale(1.05);
+		transform: scale(1.05);
 		}
 
-		/* Ajustes para pantallas móviles */
+		/* Ajustes para pantallas móviles (hasta 768px) */
 		@media (max-width: 768px) {
-			.gallery {
-				grid-template-columns: repeat(2, 1fr);  /* 2 columnas */
-			}
-
-			.b-gal-item {
-				height: 150px;
-			}
+		.gallery {
+			grid-template-columns: repeat(2, 1fr);  /* 2 columnas en pantallas móviles */
 		}
 
-		@media (max-width: 480px) {
-			.gallery {
-				grid-template-columns: 1fr; /* 1 columna para pantallas pequeñas */
-			}
-
-			.b-gal-item {
-				height: 120px;
-			}
-
-			.modal-content {
-				width: 90%;
-			}
-
-			.nav-btn {
-				font-size: 25px;
-				padding: 10px;
-			}
+		.b-gal-item {
+			height: 150px;  /* Ajustar la altura de las imágenes */
+		}
 		}
 
 		/* Estilo del modal */
 		.modal {
-			display: none;
-			position: fixed;
-			z-index: 1;
-			padding-top: 100px;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			background-color: rgba(0, 0, 0, 0.8);
-			display: flex;
-			justify-content: center;
-			align-items: center;
+		display: none;  /* Modal oculto por defecto */
+		position: fixed;
+		z-index: 1000; /* Asegúrate de que el modal esté por encima de otros elementos */
+		width: 80%;
+		max-width: 700px;
+		padding: 20px;
+		background-color: rgba(0, 0, 0, 0.8);
+		overflow: auto;
+		justify-content: center;
+		align-items: center;
+		top: 50%;  /* Inicialmente, coloca el modal en el centro de la pantalla */
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: top 0.3s, left 0.3s;
 		}
 
 		.modal-content {
-			margin: auto;
-			display: block;
-			width: 80%;
-			max-width: 700px;
-			max-height: 80vh; /* Limitar altura */
-			object-fit: contain; /* Evitar distorsión */
+		width: 100%;
+		height: auto;
 		}
 
 		.close {
-			position: absolute;
-			top: 15px;
-			right: 35px;
-			color: white;
-			font-size: 40px;
-			font-weight: bold;
-			cursor: pointer;
-		}
-
-		.nav-btn {
-			position: absolute;
-			top: 50%;
-			background-color: rgba(0, 0, 0, 0.5);
-			color: white;
-			border: none;
-			font-size: 30px;
-			padding: 20px;
-			cursor: pointer;
-			z-index: 2;
-		}
-
-		#prevBtn {
-			left: 30px;
-		}
-
-		#nextBtn {
-			right: 30px;
-		}
-
-		/* Clase para bloquear el scroll */
-		body.modal-open {
-			overflow: hidden;
+		position: absolute;
+		top: 15px;
+		right: 35px;
+		color: white;
+		font-size: 40px;
+		font-weight: bold;
+		cursor: pointer;
 		}
 	</style>
 
@@ -455,8 +408,6 @@
     <span id="closeModal" class="close">&times;</span>
     <img id="modalImg" class="modal-content" />
     <div id="caption"></div>
-    <button id="prevBtn" class="nav-btn"><</button>
-    <button id="nextBtn" class="nav-btn">></button>
 </div>
 
 </div>
@@ -468,61 +419,32 @@
 	</div>
 </section>
 <script>
-   	let currentIndex = 0;
-	let images = document.querySelectorAll('.b-gal-item');
+   	let images = document.querySelectorAll('.b-gal-item');
 	let modal = document.getElementById('modal');
 	let modalImg = document.getElementById('modalImg');
 	let caption = document.getElementById('caption');
 	modal.style.display = "none";
 
-	// Función para añadir eventos click y touch
-	function addClickAndTouchListeners(element, handler) {
-		element.addEventListener('click', handler);
-		element.addEventListener('touchstart', handler, { passive: true });
-	}
-
-	// Bloquear y desbloquear el scroll del cuerpo
-	function toggleBodyScroll(isOpen) {
-		document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-	}
-
-	// Mostrar la imagen en el modal al hacer clic/tocar
-	images.forEach((img, index) => {
-		addClickAndTouchListeners(img, () => {
-			currentIndex = index;
-			modal.style.display = "block";
-			modalImg.src = img.src;
-			caption.innerHTML = img.alt;
-			toggleBodyScroll(true);
-		});
+	// Mostrar la imagen en el modal al hacer clic
+	images.forEach((img) => {
+	img.addEventListener('click', () => {
+		console.log("Imagen clickeada: ", img.src); // Para depuración
+		modal.style.display = "block";  // Mostrar el modal al hacer clic
+		modalImg.src = img.src;
+		caption.innerHTML = img.alt;
+	});
 	});
 
 	// Cerrar el modal
-	addClickAndTouchListeners(document.getElementById('closeModal'), () => {
-		modal.style.display = "none";
-		toggleBodyScroll(false);
-	});
-
-	// Navegar a la imagen siguiente
-	addClickAndTouchListeners(document.getElementById('nextBtn'), () => {
-		currentIndex = (currentIndex + 1) % images.length;
-		modalImg.src = images[currentIndex].src;
-		caption.innerHTML = images[currentIndex].alt;
-	});
-
-	// Navegar a la imagen anterior
-	addClickAndTouchListeners(document.getElementById('prevBtn'), () => {
-		currentIndex = (currentIndex - 1 + images.length) % images.length;
-		modalImg.src = images[currentIndex].src;
-		caption.innerHTML = images[currentIndex].alt;
+	document.getElementById('closeModal').addEventListener('click', () => {
+	modal.style.display = "none";  // Ocultar el modal
 	});
 
 	// Cerrar el modal al hacer clic fuera de la imagen
 	window.addEventListener('click', (event) => {
-		if (event.target === modal) {
-			modal.style.display = "none";
-			toggleBodyScroll(false);
-		}
+	if (event.target === modal) {
+		modal.style.display = "none";
+	}
 	});
 </script>
 </div>
