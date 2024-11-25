@@ -513,62 +513,6 @@
 		</div>
 	</div>
 </section>
-<script>
-   	let images = document.querySelectorAll('.b-gal-item');
-	let modal = document.getElementById('modal');
-	let modalImg = document.getElementById('modalImg');
-	let caption = document.getElementById('caption');
-	let currentIndex = 0;  // Índice de la imagen actual
-
-	// Al principio, el modal está oculto
-	modal.style.display = "none";
-
-	// Mostrar la imagen en el modal al hacer clic
-	images.forEach((img) => {
-	img.addEventListener('click', () => {
-		console.log("Imagen clickeada: ", img.src); // Para depuración
-		modal.style.display = "block";  // Mostrar el modal al hacer clic
-		modal.classList.add("show");  // Agregar clase para mostrar el modal con transición
-		modalImg.src = img.src;
-		caption.innerHTML = img.alt;
-	});
-	});
-
-	// Cerrar el modal al hacer clic en el "X"
-	document.getElementById('closeModal').addEventListener('click', () => {
-	modal.classList.remove("show");  // Eliminar clase para hacer la transición de cierre
-	setTimeout(() => {
-		modal.style.display = "none";  // Ocultar el modal completamente después de la animación
-	}, 300);  // Duración de la transición
-	});
-
-	// Cerrar el modal al hacer clic fuera de la imagen
-	window.addEventListener('click', (event) => {
-	// Verificamos si el clic fue fuera de la imagen y dentro del modal
-	if (event.target === modal) {
-		modal.classList.remove("show");  // Eliminar clase para hacer la transición de cierre
-		setTimeout(() => {
-		modal.style.display = "none";  // Ocultar el modal completamente después de la animación
-		}, 300);  // Duración de la transición
-	}
-	});
-
-	// Navegar a la imagen siguiente
-	document.getElementById('nextBtn').addEventListener('click', () => {
-	currentIndex = (currentIndex + 1) % images.length;  // Pasar a la siguiente imagen (circular)
-	modalImg.src = images[currentIndex].src;
-	caption.innerHTML = images[currentIndex].alt;
-	});
-
-	// Navegar a la imagen anterior
-	document.getElementById('prevBtn').addEventListener('click', () => {
-	currentIndex = (currentIndex - 1 + images.length) % images.length;  // Volver a la imagen anterior (circular)
-	modalImg.src = images[currentIndex].src;
-	caption.innerHTML = images[currentIndex].alt;
-	});
-	
-
-</script>
 </div>
 </div>
         </main>
