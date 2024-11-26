@@ -23,6 +23,23 @@
 			border: none;
 		}
 
+
+		 /* Estilo por defecto (pantallas grandes) */
+		 #titulo {
+            display: inline-block; /* Para que el texto no ocupe toda la línea */
+        }
+
+        /* Estilo para pantallas móviles */
+        @media (max-width: 410px) {
+            #titulo {
+                display: block;             /* Hace que el span sea un bloque */
+                text-align: center;         /* Centra el texto horizontalmente */
+                margin: 0 auto;             /* Centra el bloque dentro de su contenedor */
+                font-size: 2rem;            /* Puedes ajustar el tamaño del texto si es necesario */
+            }
+        }
+
+
 		@media (max-width: 769px) { 
 			/* Para dispositivos móviles */
 			.iframe-container {
@@ -34,6 +51,7 @@
 			/* Para pantallas muy pequeñas */
 			.iframe-container {
 				aspect-ratio: 1 / 1; /* Relación de aspecto 1:1 para pantallas muy pequeñas */
+				
 			}
 		}
 	  </style>
@@ -85,25 +103,9 @@
 					<div class="s-c menu-nav">
 						<div class="logo-block">
 							<div class="b b-l logo logo-default logo-nb wnd-font-size-20 playfair-display logo-40 b-ls-s wnd-logo-with-text">
-	<div class="b-l-c logo-content">
-		<a class="b-l-link logo-link" href="https://3da9.webnode.es/home/">
-
-			
-
-			
-
-			<div class="b-l-br logo-br"></div>
-
-			<div class="b-l-text logo-text-wrapper">
-				<div class="b-l-text-w logo-text">
-					<span class="b-l-text-c logo-text-cell">3D Art</span>
+						<span id="titulo">3D Art</span>
+					</div>
 				</div>
-			</div>
-
-		</a>
-	</div>
-</div>
-						</div>
 
 						<div id="menu-slider">
 							<div id="menu-block">
@@ -251,7 +253,7 @@
 		  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.801148821364!2d-6.082947123616102!3d36.91901856099174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0ded8bfe4c056d%3A0x7a2bc81fa75d8941!2s3DA%2C%20servicio%20a%20la%20arquitectura%20y%20la%20construcci%C3%B3n%2C%20infograf%C3%ADa%203d!5e0!3m2!1ses!2ses!4v1731796678221!5m2!1ses!2ses" 
 		  width="100%" 
 		  height="100%" 
-		  style="border:0;" 
+		  style="border-radius: 30px;" 
 		  allowfullscreen="" 
 		  loading="lazy"
 		  referrerpolicy="no-referrer-when-downgrade">
